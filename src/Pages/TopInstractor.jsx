@@ -18,7 +18,7 @@ const TopInstructor = () => {
     });
 
     axios
-      .get("http://localhost:3000/all-course")
+      .get("https://assignment-10-server-seven-taupe.vercel.app/all-course")
       .then((res) => {
         const allInstructors = res.data
           .map((course) => course.instructor)

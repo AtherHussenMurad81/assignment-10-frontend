@@ -25,7 +25,7 @@ function AllCourses() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:3000/all-course")
+      .get("https://assignment-10-server-seven-taupe.vercel.app/all-course")
       .then((res) => {
         setCourses(res.data);
         setLoading(false);
@@ -44,7 +44,9 @@ function AllCourses() {
 
     setLoading(true);
     axios
-      .get(`http://localhost:3000/search?search=${search_text}`)
+      .get(
+        `https://assignment-10-server-seven-taupe.vercel.app/search?search=${search_text}`
+      )
       .then((res) => {
         setCourses(res.data);
         setLoading(false);
@@ -56,14 +58,15 @@ function AllCourses() {
   };
 
   // Enroll alert
-  const handleEnroll = (course) => {
-    Swal.fire({
-      title: "Enrolled!",
-      text: `You have successfully enrolled in ${course.title}`,
-      icon: "success",
-      confirmButtonText: "OK",
-    });
-  };
+  // const handleEnroll = (course) => {
+  //   Swal.fire({
+  //     title: "Enrolled!",
+  //     text: `You have successfully enrolled in ${course.title}`,
+  //     icon: "success",
+  //     confirmButtonText: "OK",
+  //   });
+  //   navigate("/dash-board/enroll");
+  // };
 
   // View details
   const handleViewDetails = (courseId) => {
@@ -149,13 +152,12 @@ function AllCourses() {
                 >
                   View Details
                 </button>
-                <Link
-                  to="/details"
+                {/* <Link
                   onClick={() => handleEnroll(course)}
                   className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
                 >
                   Enroll Now
-                </Link>
+                </Link> */}
               </div>
             </div>
           ))}

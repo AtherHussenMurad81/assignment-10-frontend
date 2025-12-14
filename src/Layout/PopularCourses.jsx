@@ -25,7 +25,9 @@ const PopularCourses = () => {
   // Fetch courses from backend
   useEffect(() => {
     axios
-      .get("http://localhost:3000/popular-courses")
+      .get(
+        "https://assignment-10-server-seven-taupe.vercel.app/popular-courses"
+      )
       .then((res) => {
         setCourses(res.data);
         setLoading(false);
@@ -36,15 +38,6 @@ const PopularCourses = () => {
       });
   }, []);
   console.log(courses);
-
-  const handleEnroll = (course) => {
-    Swal.fire({
-      title: "Enrolled!",
-      text: `You have successfully enrolled in ${course.title}`,
-      icon: "success",
-      confirmButtonText: "OK",
-    });
-  };
 
   const handleViewDetails = (courseId) => {
     Swal.fire({
@@ -97,13 +90,6 @@ const PopularCourses = () => {
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors cursor-pointer"
               >
                 View Details
-              </button>
-
-              <button
-                onClick={() => handleEnroll(course)}
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors cursor-pointer"
-              >
-                Enroll Now
               </button>
             </div>
           </div>

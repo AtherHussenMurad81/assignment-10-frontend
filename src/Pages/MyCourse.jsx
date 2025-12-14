@@ -15,7 +15,9 @@ const MyCourse = () => {
 
     setLoading(true);
     axios
-      .get(`http://localhost:3000/my-course?email=${user.email}`)
+      .get(
+        `https://assignment-10-server-seven-taupe.vercel.app/my-course?email=${user.email}`
+      )
       .then((res) => {
         setMyCourse(res.data);
         setLoading(false);
@@ -43,7 +45,9 @@ const MyCourse = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3000/my-course/${_id}`)
+          .delete(
+            `https://assignment-10-server-seven-taupe.vercel.app/my-course/${_id}`
+          )
           .then(() => {
             Swal.fire("Deleted!", "Your course has been deleted.", "success");
             fetchMyCourses(); // Refresh list

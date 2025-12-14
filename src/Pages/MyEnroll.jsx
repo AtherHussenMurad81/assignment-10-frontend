@@ -11,7 +11,10 @@ const MyEnroll = () => {
     if (!user?.email) return;
 
     axios
-      .post("http://localhost:3000/my-enrolled-courses", { email: user.email })
+      .post(
+        "https://assignment-10-server-seven-taupe.vercel.app/my-enrolled-courses",
+        { email: user.email }
+      )
       .then((res) => {
         setEnrolledCourses(res.data);
         setLoading(false);
@@ -21,6 +24,7 @@ const MyEnroll = () => {
         setLoading(false);
       });
   }, [user]);
+  console.log(enrolledCourses);
 
   if (loading) {
     return (
@@ -43,7 +47,7 @@ const MyEnroll = () => {
               <tr>
                 <th className="border px-4 py-2">#</th>
                 <th className="border px-4 py-2">Course Name</th>
-                <th className="border px-4 py-2">Instructor</th>
+                <th className="border px-4 py-2">Category</th>
                 <th className="border px-4 py-2">Duration</th>
                 <th className="border px-4 py-2">Price</th>
                 <th className="border px-4 py-2">Status</th>
@@ -55,7 +59,7 @@ const MyEnroll = () => {
                 <tr key={course._id} className="hover:bg-gray-50">
                   <td className="border px-4 py-2">{index + 1}</td>
                   <td className="border px-4 py-2">{course.title}</td>
-                  <td className="border px-4 py-2">{course.instructor}</td>
+                  <td className="border px-4 py-2">{course.category}</td>
                   <td className="border px-4 py-2">{course.duration} Weeks</td>
                   <td className="border px-4 py-2">${course.price}</td>
                   <td className="border px-4 py-2">

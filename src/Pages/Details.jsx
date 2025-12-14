@@ -16,7 +16,9 @@ const Details = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/all-course/${id}`);
+        const res = await axios.get(
+          `https://assignment-10-server-seven-taupe.vercel.app/all-course/${id}`
+        );
         setCourse(res.data.result);
       } catch (error) {
         console.error(error);
@@ -50,15 +52,19 @@ const Details = () => {
       duration: course.duration,
       studentEmail: user.email,
       status: "Enrolled",
+      instractor: course.instructor.name,
     };
-    console.log(enrollData);
+    console.log("Instractor", enrollData);
 
     try {
-      const res = await axios.post("http://localhost:3000/enroll", enrollData);
+      const res = await axios.post(
+        "https://assignment-10-server-seven-taupe.vercel.app/enroll",
+        enrollData
+      );
 
       if (res.data.insertedId) {
         Swal.fire("Success!", "Course Enrolled Successfully", "success");
-        navigate("/my-enroll");
+        navigate("/dash-board/enroll");
       } else {
         Swal.fire("Info", "Already Enrolled", "info");
       }

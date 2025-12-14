@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 // AOS
@@ -149,12 +149,13 @@ function AllCourses() {
                 >
                   View Details
                 </button>
-                <button
+                <Link
+                  to="/details"
                   onClick={() => handleEnroll(course)}
                   className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
                 >
                   Enroll Now
-                </button>
+                </Link>
               </div>
             </div>
           ))}

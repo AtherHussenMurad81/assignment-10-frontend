@@ -1,9 +1,74 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { AuthContext } from "../Context/AuthContext";
 
 const MyEnroll = () => {
+  const { user } = useContext(AuthContext);
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user?.email) return;
+
+    axios
+      .post("http://localhost:3000/my-enrolled-courses", { email: user.email })
+      .then((res) => {
+        setEnrolledCourses(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [user]);
+
+  if (loading) {
+    return (
+      <p className="text-center text-2xl mt-10">Loading enrolled courses...</p>
+    );
+  }
+
   return (
-    <div>
-      <h2>My Enroll Page</h2>
+    <div className="p-6">
+      <h2 className="text-2xl font-bold mb-4">My Enrolled Courses</h2>
+
+      {enrolledCourses.length === 0 ? (
+        <p className="text-center text-gray-500">
+          You have not enrolled in any course yet.
+        </p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full border border-gray-200">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="border px-4 py-2">#</th>
+                <th className="border px-4 py-2">Course Name</th>
+                <th className="border px-4 py-2">Instructor</th>
+                <th className="border px-4 py-2">Duration</th>
+                <th className="border px-4 py-2">Price</th>
+                <th className="border px-4 py-2">Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {enrolledCourses.map((course, index) => (
+                <tr key={course._id} className="hover:bg-gray-50">
+                  <td className="border px-4 py-2">{index + 1}</td>
+                  <td className="border px-4 py-2">{course.title}</td>
+                  <td className="border px-4 py-2">{course.instructor}</td>
+                  <td className="border px-4 py-2">{course.duration} Weeks</td>
+                  <td className="border px-4 py-2">${course.price}</td>
+                  <td className="border px-4 py-2">
+                    <span className="px-2 py-1 rounded bg-green-100 text-green-700 text-sm">
+                      {course.status || "Enrolled"}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

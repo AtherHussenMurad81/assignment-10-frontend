@@ -61,7 +61,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <MyCourse /> },
       { path: "add-course", element: <AddCourse /> },
-      { path: "my-enroll", element: <MyEnroll /> },
+      { path: "enroll", element: <MyEnroll /> },
       {
         path: "update-course/:id",
         element: <UpdateCourse />,

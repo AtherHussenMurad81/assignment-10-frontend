@@ -12,23 +12,23 @@ const Details = () => {
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch single course
+  // fetch single course
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`http://localhost:3000/all-course/${id}`)
-      .then((res) => {
-        setCourse(res.data.result || res.data);
+    const fetchCourse = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/all-course/${id}`);
+        setCourse(res.data.result);
+      } catch (error) {
+        console.error(error);
+      } finally {
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
+      }
+    };
+    fetchCourse();
   }, [id]);
-
-  // Enroll handler
-  const handleEnroll = () => {
+  console.log(course);
+  const handleEnroll = async () => {
+    // login check
     if (!user) {
       Swal.fire({
         icon: "warning",
@@ -39,78 +39,70 @@ const Details = () => {
       return;
     }
 
-    Swal.fire({
-      icon: "success",
-      title: "Enrolled Successfully!",
-      text: `You have enrolled in ${course.title}`,
-    });
+    // enroll data
+    const enrollData = {
+      courseId: course._id,
+      title: course.title,
+      image: course.image,
+      category: course.category,
+      description: course.description,
+      price: Number(course.price),
+      duration: course.duration,
+      studentEmail: user.email,
+      status: "Enrolled",
+    };
+    console.log(enrollData);
+
+    try {
+      const res = await axios.post("http://localhost:3000/enroll", enrollData);
+
+      if (res.data.insertedId) {
+        Swal.fire("Success!", "Course Enrolled Successfully", "success");
+        navigate("/my-enroll");
+      } else {
+        Swal.fire("Info", "Already Enrolled", "info");
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Enrollment Failed", "error");
+    }
   };
 
-  // Loading state
   if (loading) {
-    return (
-      <p className="text-center text-4xl mt-10">Loading course details...</p>
-    );
+    return <p className="text-center text-3xl mt-10">Loading...</p>;
   }
 
-  // No course found
   if (!course) {
-    return (
-      <p className="text-center text-2xl mt-10 text-red-500">
-        Course not found
-      </p>
-    );
+    return <p className="text-center text-red-500">Course not found</p>;
   }
 
   return (
     <div className="max-w-6xl mx-auto p-4">
-      {/* Header */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Course Image */}
         <img
           src={course.image}
           alt={course.title}
-          className="w-full h-80 object-cover rounded shadow"
+          className="w-full h-80 object-cover rounded"
         />
 
-        {/* Course Info */}
+        {/* Course Details */}
         <div>
           <h2 className="text-3xl font-bold mb-3">{course.title}</h2>
-
-          <p className="text-gray-600 mb-4">{course.description}</p>
-
-          <p className="text-xl font-semibold mb-2">
-            💲 Price: ${course.price}
-          </p>
-
-          <p className="mb-2">
-            📂 Category:{" "}
-            <span className="font-medium">{course.category || "N/A"}</span>
-          </p>
-
-          <p className="mb-4">
-            ⏱ Duration:{" "}
-            <span className="font-medium">
-              {course.duration ? `${course.duration} Weeks` : "N/A"}
-            </span>
-          </p>
-
-          {/* Instructor */}
-          <div className="flex items-center gap-4 mb-6">
-            <img
-              src={course.instructor?.photo}
-              alt={course.instructor?.name}
-              className="w-14 h-14 rounded-full object-cover"
-            />
-            <div>
-              <p className="font-semibold">
-                👨‍🏫 {course.instructor?.name || "Unknown"}
-              </p>
-              <p className="text-sm text-gray-500">
-                {course.instructor?.email}
-              </p>
+          <p className="mb-3">{course.description}</p>
+          <p className="mb-2">💲 Price: ${course.price}</p>
+          <p className="mb-2">📂 Category: {course.category}</p>
+          <p className="mb-2">⏱ Duration: {course.duration} Weeks</p>
+          {course.instructor && (
+            <div className="flex items-center mt-4 mb-4">
+              <img
+                src={course.instructor.photo}
+                alt={course.instructor.name}
+                className="w-12 h-12 rounded-full mr-3"
+              />
+              <p>👨‍🏫 Instructor: {course.instructor.name}</p>
             </div>
-          </div>
+          )}
 
           {/* Enroll Button */}
           <button

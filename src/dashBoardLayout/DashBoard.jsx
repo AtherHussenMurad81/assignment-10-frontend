@@ -69,7 +69,7 @@ const DashBoard = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/dash-board/my-enroll" className={linkClass}>
+              <NavLink to="/dash-board/enroll" className={linkClass}>
                 <MdDownloadDone />
                 <span className="is-drawer-close:hidden">My Enroll</span>
               </NavLink>

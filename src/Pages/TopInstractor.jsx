@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { use, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { AuthContext } from "../Context/AuthContext";
@@ -7,7 +7,8 @@ import { AuthContext } from "../Context/AuthContext";
 const TopInstructor = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
     // AOS init
     AOS.init({
@@ -19,12 +20,22 @@ const TopInstructor = () => {
     axios
       .get("http://localhost:3000/all-course")
       .then((res) => {
-        const instructorData = res.data.map((course) => ({
-          name: course.instructor?.name,
-          photo: course.instructor?.photo || user?.photoURL,
-        }));
+        const allInstructors = res.data
+          .map((course) => course.instructor)
+          .filter(Boolean); // remove null/undefined
 
-        setInstructors(instructorData);
+        // remove duplicates by name/email
+        const uniqueInstructors = [];
+        const map = new Map();
+
+        for (const instructor of allInstructors) {
+          if (!map.has(instructor.email)) {
+            map.set(instructor.email, true);
+            uniqueInstructors.push(instructor);
+          }
+        }
+
+        setInstructors(uniqueInstructors);
         setLoading(false);
       })
       .catch((err) => {
@@ -38,6 +49,12 @@ const TopInstructor = () => {
       <p className="text-center mt-10 text-lg font-semibold animate-pulse">
         Loading...
       </p>
+    );
+  }
+
+  if (instructors.length === 0) {
+    return (
+      <p className="text-center mt-10 text-gray-500">No instructors found.</p>
     );
   }
 
@@ -58,12 +75,12 @@ const TopInstructor = () => {
             className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:scale-105 transition-transform duration-300"
           >
             <img
-              src={instructor.photo}
+              src={instructor.photo || "https://via.placeholder.com/150"}
               alt={instructor.name}
               className="w-24 h-24 rounded-full border-4 border-indigo-500 mb-4"
             />
             <h3 className="text-lg font-semibold text-gray-800">
-              {instructor.name}
+              {instructor.name || "Unknown"}
             </h3>
           </div>
         ))}

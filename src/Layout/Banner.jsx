@@ -1,46 +1,28 @@
-import axios from "axios";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Banner = () => {
-  const [teach, setTeach] = useState([]); // State
-  const [loading, setLoading] = useState(true);
   const [current, setCurrent] = useState(0);
 
-  // Fetch courses
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/all-course")
-      .then((res) => {
-        setTeach(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
+  // Static instructor images
+  const images = [
+    "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg",
+    "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg",
+    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg",
+    "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg",
+  ];
 
-  // Assuming instructor.photo is an image, not a video
-  const images = teach.map((item) => item.instructor?.photo);
-  // console.log(images);
-  // console.log(teach);
   // Auto-play carousel
   useEffect(() => {
-    if (images.length === 0) return;
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
-    }, 6000);
+    }, 6000); // 6 seconds
     return () => clearInterval(interval);
-  }, [images]);
+  }, [images.length]);
 
   const prevSlide = () =>
     setCurrent((current - 1 + images.length) % images.length);
   const nextSlide = () => setCurrent((current + 1) % images.length);
-
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
-  if (images.length === 0)
-    return <p className="text-center mt-10">No images found</p>;
 
   return (
     <div className="relative w-full">

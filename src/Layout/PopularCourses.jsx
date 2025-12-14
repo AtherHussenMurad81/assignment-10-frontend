@@ -35,6 +35,7 @@ const PopularCourses = () => {
         setLoading(false);
       });
   }, []);
+  console.log(courses);
 
   const handleEnroll = (course) => {
     Swal.fire({

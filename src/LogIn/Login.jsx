@@ -90,14 +90,14 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
-      <div className="card bg-white shadow-2xl w-full max-w-md p-6 rounded-lg border">
+    <div className="flex justify-center items-center min-h-screen px-4">
+      <div className="card shadow-2xl w-full max-w-md p-6 rounded-lg ">
         <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
 
         <form onSubmit={handleLogIn} className="space-y-4">
           {/* Email */}
           <div>
-            <label className="label font-semibold">Email</label>
+            <label className="font-semibold">Email</label>
             <input
               type="email"
               name="email"
@@ -111,7 +111,7 @@ const Login = () => {
 
           {/* Password */}
           <div className="relative">
-            <label className="label font-semibold">Password</label>
+            <label className="font-bold">Password</label>
             <input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -124,7 +124,7 @@ const Login = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800"
+              className="absolute items-center right-4 top-1/2 -translate-y-1/2 "
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? <FaRegEyeSlash /> : <FaEye />}
@@ -139,38 +139,40 @@ const Login = () => {
           {/* Error Message */}
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
-          <button className="btn w-full bg-gradient-to-r from-pink-500 to-red-600 text-white rounded-full h-12">
-            Login
-          </button>
+          <div className="flex">
+            <button className="btn w-[50%] bg-gradient-to-r hover:transform from-pink-500 hover:animate-pulse to-red-600 rounded-full h-12">
+              Login
+            </button>
+            <button
+              onClick={() => handleDemoLogin("user")}
+              className="btn w-[50%] bg-gradient-to-r from-pink-500 hover:animate-pulse to to-red-600 rounded-full h-12"
+            >
+              Demo User
+            </button>
+          </div>
         </form>
 
         {/* Demo Login */}
         <div className="flex justify-center gap-2 mt-4">
-          <button
-            onClick={() => handleDemoLogin("user")}
-            className="btn btn-outline btn-sm"
-          >
-            Demo User
-          </button>
-          <button
+          {/* <button
             onClick={() => handleDemoLogin("admin")}
             className="btn btn-outline btn-sm"
           >
             Demo Admin
-          </button>
+          </button> */}
         </div>
 
         {/* Social Login */}
         <div className="flex flex-col gap-2 mt-4">
           <button
             onClick={handleGoogleLogIn}
-            className="btn w-full border rounded-full bg-white text-black flex items-center justify-center gap-2"
+            className="btn w-full  rounded-full  flex items-center justify-center gap-2"
           >
             <GoogleIcon /> Login with Google
           </button>
           <button
             onClick={handleFacebookLogIn}
-            className="btn w-full border rounded-full bg-blue-600 text-white flex items-center justify-center gap-2"
+            className="btn w-full  rounded-full bg-blue-600  flex items-center justify-center gap-2"
           >
             <FaFacebook /> Login with Facebook
           </button>

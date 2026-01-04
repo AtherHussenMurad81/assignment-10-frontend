@@ -13,7 +13,7 @@ const Profile = () => {
           <img
             src={user?.photoURL || "/default-avatar.png"}
             alt="Profile"
-            className="w-28 h-28 rounded-full border-4 border-indigo-500 mb-4 object-cover"
+            className="animate-pulse  w-28 h-28 rounded-full border-4 border-indigo-500 mb-4 object-cover"
           />
           <h2 className="text-2xl font-semibold ">
             {user?.displayName || "Anonymous User"}

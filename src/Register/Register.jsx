@@ -56,24 +56,24 @@ const Register = () => {
   };
 
   return (
-    <div className="card bg-base-100 w-full mx-auto max-w-sm shadow-2xl border">
+    <div className="card bg-base-100 w-full mx-auto max-w-sm shadow-2xl ">
       <div className="card-body">
         <h1 className="text-3xl font-bold text-center">Register</h1>
 
         <form onSubmit={handleRegister}>
           <fieldset className="fieldset">
             {/* Name */}
-            <label className="label">Name</label>
+            <label className=" font-bold text-xl">Name</label>
             <input
               type="text"
               name="displayName"
               required
-              className="input rounded-full h-12"
+              className="input font rounded-full h-12"
               placeholder="Name"
             />
 
             {/* Photo URL */}
-            <label className="label">Photo URL</label>
+            <label className=" font-bold text-xl">Photo URL</label>
             <input
               type="text"
               name="photoURL"
@@ -82,7 +82,7 @@ const Register = () => {
             />
 
             {/* Email */}
-            <label className="label">Email</label>
+            <label className=" font-bold text-xl">Email</label>
             <input
               type="email"
               name="email"
@@ -92,7 +92,7 @@ const Register = () => {
             />
 
             {/* Password */}
-            <label className="label">Password</label>
+            <label className="font-bold text-xl">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -115,7 +115,7 @@ const Register = () => {
             {/* Error */}
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
-            <button className="btn text-white mt-4 rounded-full bg-linear-to-r from-pink-500 to-red-600">
+            <button className="btn text-white mt-4 rounded-full bg-linear-to-r from-pink-500 to-red-600 hover:animate-pulse">
               Register
             </button>
           </fieldset>

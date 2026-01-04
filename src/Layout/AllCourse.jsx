@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 // AOS
 import AOS from "aos";
 import "aos/dist/aos.css";
+import CourseSkeleton from "./CourseSkeleton";
+import NoFOund from "../Share/NoFOund";
 
 function AllCourses() {
   const [courses, setCourses] = useState([]);
@@ -43,10 +45,7 @@ function AllCourses() {
     if (!search_text) return;
 
     setLoading(true);
-    axios
-      .get(
-        `https://assignment-10-server-seven-taupe.vercel.app/search?search=${search_text}`
-      )
+    axios.get`https://assignment-10-server-seven-taupe.vercel.app/search?search=${search_text}`()
       .then((res) => {
         setCourses(res.data);
         setLoading(false);
@@ -76,7 +75,7 @@ function AllCourses() {
   if (loading)
     return (
       <p className="text-center text-4xl mt-10" data-aos="fade-up">
-        Loading courses...
+        <CourseSkeleton></CourseSkeleton>
       </p>
     );
 
@@ -110,7 +109,7 @@ function AllCourses() {
       {/* Courses Grid */}
       {courses.length === 0 ? (
         <p data-aos="fade-up" className="text-center text-xl">
-          No courses found
+          <NoFOund></NoFOund>
         </p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -148,7 +147,7 @@ function AllCourses() {
               <div data-aos="fade-up" className="mt-4 flex gap-2">
                 <button
                   onClick={() => handleViewDetails(course._id)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer hover:transform hover:animate-pulse"
                 >
                   View Details
                 </button>

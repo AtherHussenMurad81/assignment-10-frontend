@@ -26,7 +26,7 @@ const Banner = () => {
 
   return (
     <div className="relative w-full">
-      <div className="max-w-7xl mx-auto relative overflow-hidden rounded-2xl shadow-2xl">
+      <div className="w-full mx-auto relative overflow-hidden rounded-2xl shadow-2xl">
         <div
           className="flex transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${current * 100}%)` }}

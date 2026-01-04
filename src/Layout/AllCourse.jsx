@@ -56,17 +56,6 @@ function AllCourses() {
       });
   };
 
-  // Enroll alert
-  // const handleEnroll = (course) => {
-  //   Swal.fire({
-  //     title: "Enrolled!",
-  //     text: `You have successfully enrolled in ${course.title}`,
-  //     icon: "success",
-  //     confirmButtonText: "OK",
-  //   });
-  //   navigate("/dash-board/enroll");
-  // };
-
   // View details
   const handleViewDetails = (courseId) => {
     navigate(`/course/${courseId}`);
@@ -82,7 +71,10 @@ function AllCourses() {
   return (
     <div className="p-4">
       {/* Title */}
-      <h2 data-aos="fade-down" className="text-3xl text-center p-2 md:p-8">
+      <h2
+        data-aos="fade-down"
+        className="text-3xl text-center font-bold p-2 md:p-8 mt-10"
+      >
         All Courses Here
       </h2>
 
@@ -96,7 +88,7 @@ function AllCourses() {
           name="search"
           type="search"
           placeholder="Search courses..."
-          className="border rounded p-2"
+          className="rounded p-2 "
         />
         <button
           type="submit"
@@ -112,13 +104,13 @@ function AllCourses() {
           <NoFOund></NoFOund>
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {courses.map((course, index) => (
             <div
               key={course._id}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="border p-4 rounded shadow hover:shadow-lg transition"
+              className="p-4 rounded shadow hover:shadow-lg transition"
             >
               {/* Image */}
               <img
@@ -134,7 +126,7 @@ function AllCourses() {
               </h2>
 
               {/* Description */}
-              <p data-aos="fade-left" className="mt-1 text-gray-600">
+              <p data-aos="fade-left" className="mt-1">
                 {course.description}
               </p>
 

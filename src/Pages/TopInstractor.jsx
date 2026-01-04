@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { AuthContext } from "../Context/AuthContext";
+import Spinner from "../Share/Spinner";
 
 const TopInstructor = () => {
   const [instructors, setInstructors] = useState([]);
@@ -45,11 +46,7 @@ const TopInstructor = () => {
   }, []);
 
   if (loading) {
-    return (
-      <p className="text-center mt-10 text-lg font-semibold animate-pulse">
-        Loading...
-      </p>
-    );
+    return <Spinner></Spinner>;
   }
 
   if (instructors.length === 0) {
@@ -66,7 +63,7 @@ const TopInstructor = () => {
       </h2>
 
       {/* Instructor Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-11/12 mx-auto px-4">
         {instructors.map((instructor, index) => (
           <div
             key={index}

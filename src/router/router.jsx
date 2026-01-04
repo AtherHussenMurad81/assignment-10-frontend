@@ -13,11 +13,15 @@ import MyCourse from "../Pages/MyCourse.jsx";
 import MyEnroll from "../Pages/MyEnroll.jsx";
 import DashBoardLayout from "../dashBoardLayout/DashBoardLayout.jsx";
 import UpdateCourse from "../Pages/UpdateCourse.jsx";
+import About from "../Pages/About.jsx";
+import Contact from "../Pages/Contact.jsx";
+import Overview from "../Pages/Overview.jsx";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+
     children: [
       { index: true, element: <Home /> },
       { path: "courses", element: <Courses /> },
@@ -47,6 +51,14 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/about",
+        Component: About,
+      },
+      {
+        path: "/contact",
+        Component: Contact,
+      },
     ],
   },
 
@@ -65,6 +77,10 @@ export const router = createBrowserRouter([
       {
         path: "update-course/:id",
         element: <UpdateCourse />,
+      },
+      {
+        path: "overview",
+        element: <Overview />,
       },
     ],
   },

@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import Swal from "sweetalert2";
+import GoogleIcon from "../Share/GoogleIcon";
+import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const { createUser, signInWithGoogle } = useContext(AuthContext);
@@ -9,13 +11,12 @@ const Register = () => {
   const location = useLocation();
 
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const from = location.state?.from?.pathname || "/";
 
   const handleRegister = (e) => {
     e.preventDefault();
-    const name = e.target.displayName.value;
-    const photoURL = e.target.photoURL.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
 
@@ -45,19 +46,13 @@ const Register = () => {
         });
         navigate(from, { replace: true });
       })
-      .catch((err) => {
-        setError(err.message);
-      });
+      .catch((err) => setError(err.message));
   };
 
   const handleGoogleLogIn = () => {
     signInWithGoogle()
-      .then(() => {
-        navigate(from, { replace: true });
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+      .then(() => navigate(from, { replace: true }))
+      .catch((err) => setError(err.message));
   };
 
   return (
@@ -67,42 +62,57 @@ const Register = () => {
 
         <form onSubmit={handleRegister}>
           <fieldset className="fieldset">
+            {/* Name */}
             <label className="label">Name</label>
             <input
               type="text"
               name="displayName"
               required
-              className="input rounded-full"
+              className="input rounded-full h-12"
               placeholder="Name"
             />
 
+            {/* Photo URL */}
             <label className="label">Photo URL</label>
             <input
               type="text"
               name="photoURL"
-              className="input rounded-full"
+              className="input rounded-full h-12"
               placeholder="Photo URL"
             />
 
+            {/* Email */}
             <label className="label">Email</label>
             <input
               type="email"
               name="email"
               required
-              className="input rounded-full"
+              className="input rounded-full h-12"
               placeholder="Email"
             />
 
+            {/* Password */}
             <label className="label">Password</label>
-            <input
-              type="password"
-              name="password"
-              required
-              className="input rounded-full"
-              placeholder="Password"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                required
+                className="input rounded-full h-12 w-full pr-14"
+                placeholder="Password"
+              />
 
-            {/* ❌ Error Message */}
+              {/* Eye Icon */}
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-xl text-gray-600"
+              >
+                {showPassword ? <FaRegEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+
+            {/* Error */}
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
             <button className="btn text-white mt-4 rounded-full bg-linear-to-r from-pink-500 to-red-600">
@@ -111,16 +121,18 @@ const Register = () => {
           </fieldset>
         </form>
 
+        {/* Google Login */}
         <button
           onClick={handleGoogleLogIn}
-          className="btn bg-white rounded-full text-black border"
+          className="btn bg-white rounded-full text-black border mt-3"
         >
+          <GoogleIcon />
           Login with Google
         </button>
 
         <p className="text-center text-sm mt-2">
           Already have an account?{" "}
-          <Link className="text-blue-500 hover:underline" to="/auth/login">
+          <Link to="/auth/login" className="text-blue-500 hover:underline">
             Login
           </Link>
         </p>

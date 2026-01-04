@@ -139,7 +139,7 @@ const UpdateCourse = () => {
         {/* Buttons */}
         <button
           type="submit"
-          className="btn bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white w-full py-3 rounded-lg text-lg font-semibold transition-transform transform hover:-translate-y-1"
+          className="btn transform translate-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white w-full py-3 rounded-lg text-lg font-semibold transition-transform transform hover:-translate-y-1"
         >
           Update Course
         </button>

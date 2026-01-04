@@ -36,17 +36,13 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          Update Profile
-        </h2>
+    <div className="min-h-screen  flex items-center justify-center px-4">
+      <div className=" w-full max-w-md rounded-xl shadow-lg p-6">
+        <h2 className="text-2xl font-bold text-center mb-6 ">Update Profile</h2>
 
         <form onSubmit={handleUpdate} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
-              Name
-            </label>
+            <label className="block text-sm font-medium  mb-1">Name</label>
             <input
               type="text"
               value={name}
@@ -57,9 +53,7 @@ const UpdateProfile = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
-              Photo URL
-            </label>
+            <label className="block text-sm font-medium  mb-1">Photo URL</label>
             <input
               type="text"
               value={photo}
@@ -71,7 +65,7 @@ const UpdateProfile = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition"
+            className="w-full py-2 rounded-lg bg-indigo-500  hover:bg-indigo-600 transition"
           >
             {loading ? "Updating..." : "Update Profile"}
           </button>

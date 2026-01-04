@@ -2,27 +2,39 @@ import React from "react";
 import { FaHome } from "react-icons/fa";
 import { MdGolfCourse, MdDownloadDone } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
-import { NavLink, Outlet } from "react-router";
+import { NavLink, Outlet } from "react-router"; // make sure it's react-router-dom
 
 const DashBoard = () => {
   const linkClass = ({ isActive }) =>
-    `is-drawer-close:tooltip is-drawer-close:tooltip-right
-     flex items-center gap-3 rounded px-3 py-2 transition
+    `flex items-center gap-3 rounded px-3 py-2 transition 
      ${isActive ? "bg-green-500 text-white" : "hover:bg-base-300"}`;
 
   return (
     <div className="drawer lg:drawer-open">
+      {/* Drawer toggle */}
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
-      {/* Drawer Content */}
-      <div className="drawer-content">
+      {/* Drawer content */}
+      <div className="drawer-content flex flex-col min-h-screen">
         {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
+        <nav className="navbar w-full bg-base-300 px-4">
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"
             className="btn btn-square btn-ghost"
           >
+            {/* <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeWidth="2"
+              fill="none"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg> */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -38,50 +50,52 @@ const DashBoard = () => {
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
           </label>
-          <div className="px-4 text-xl font-bold">Dashboard</div>
+          <div className="text-xl font-bold">Dashboard</div>
         </nav>
 
         {/* Page content */}
-        <div className="p-4">
-          <Outlet /> {/* renders current child route */}
-        </div>
+        <main className="flex-1 p-4 bg-gray-50">
+          <Outlet /> {/* Render child route */}
+        </main>
       </div>
 
-      {/* Drawer Sidebar */}
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          <ul className="menu w-full grow p-2">
+      {/* Sidebar */}
+      <div className="drawer-side">
+        <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+        <aside className="flex flex-col min-h-full bg-base-200 w-64 p-2">
+          <ul className="menu flex flex-col gap-2 w-full">
+            <li>
+              <NavLink to="/dash-board/overview" className={linkClass}>
+                <MdGolfCourse size={20} />
+                <span>Overview</span>
+              </NavLink>
+            </li>
             <li>
               <NavLink to="/dash-board" className={linkClass}>
-                <MdGolfCourse />
-                <span className="is-drawer-close:hidden">My Course</span>
+                <MdGolfCourse size={20} />
+                <span>My Course</span>
               </NavLink>
             </li>
             <li>
               <NavLink to="/dash-board/add-course" className={linkClass}>
-                <IoMdAdd />
-                <span className="is-drawer-close:hidden">Add Course</span>
+                <IoMdAdd size={20} />
+                <span>Add Course</span>
               </NavLink>
             </li>
             <li>
               <NavLink to="/dash-board/enroll" className={linkClass}>
-                <MdDownloadDone />
-                <span className="is-drawer-close:hidden">My Enroll</span>
+                <MdDownloadDone size={20} />
+                <span>My Enroll</span>
               </NavLink>
             </li>
             <li>
               <NavLink to="/" className={linkClass}>
-                <FaHome />
-                <span className="is-drawer-close:hidden">Homepage</span>
+                <FaHome size={20} />
+                <span>Homepage</span>
               </NavLink>
             </li>
           </ul>
-        </div>
+        </aside>
       </div>
     </div>
   );

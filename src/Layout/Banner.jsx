@@ -2,73 +2,103 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Banner = () => {
-  const [current, setCurrent] = useState(0);
-
-  // Static instructor images
-  const images = [
-    "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg",
-    "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg",
-    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg",
-    "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg",
+  const slides = [
+    {
+      img: "https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg", // Web development (laptop coding)
+      title: "Learn Web Development",
+    },
+    {
+      img: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg", // MERN stack (developer workspace)
+      title: "Master MERN Stack",
+    },
+    {
+      img: "https://images.pexels.com/photos/3184300/pexels-photo-3184300.jpeg", // UI/UX (design workspace)
+      title: "UI/UX Design Courses",
+    },
+    {
+      img: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg", // Project based (team project)
+      title: "Project-Based Learning",
+    },
   ];
 
-  // Auto-play carousel
+  const [current, setCurrent] = useState(0);
+
+  // Auto-slide
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 6000); // 6 seconds
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 6000);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, []);
 
   const prevSlide = () =>
-    setCurrent((current - 1 + images.length) % images.length);
-  const nextSlide = () => setCurrent((current + 1) % images.length);
+    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+  const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
+
+  const handleAllCourses = () => {
+    window.location.href = "/courses"; // Replace with your actual route
+  };
 
   return (
-    <div className="relative w-full">
-      <div className="w-full mx-auto relative overflow-hidden rounded-2xl shadow-2xl">
+    <div className="relative border border-2 w-screen h-screen overflow-hidden mx-auto">
+      {/* Slides */}
+      {slides.map((slide, i) => (
         <div
-          className="flex transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(-${current * 100}%)` }}
+          key={i}
+          className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+            i === current ? "opacity-100 z-10" : "opacity-0 z-0"
+          }`}
         >
-          {images.map((src, i) => (
-            <div key={i} className="w-full shrink-0 relative">
-              <img
-                src={src}
-                alt={`Instructor ${i}`}
-                className="w-full h-[60vh] object-cover brightness-90 rounded-2xl"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-2xl" />
-            </div>
-          ))}
-        </div>
+          {/* Slide Image */}
+          <img
+            src={slide.img}
+            alt={slide.title}
+            className="w-screen h-full object-cover"
+          />
 
-        {/* Navigation Buttons */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black/30" />
 
-        {/* Dots */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          {images.map((_, i) => (
+          {/* Centered Text + Button */}
+          <div className="absolute z-20 inset-0 flex flex-col items-center justify-center text-center">
+            <h1 className="text-white text-3xl md:text-5xl font-bold mb-6">
+              {slide.title}
+            </h1>
             <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              className={`h-2 w-2 rounded-full transition-all ${
-                current === i ? "bg-white w-4" : "bg-white/50"
-              }`}
-            />
-          ))}
+              onClick={handleAllCourses}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md transition transform hover:scale-105"
+            >
+              See All Courses
+            </button>
+          </div>
         </div>
+      ))}
+
+      {/* Navigation Arrows */}
+      <button
+        onClick={prevSlide}
+        className="absolute z-30 left-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full"
+      >
+        <ChevronLeft />
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute z-30 right-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full"
+      >
+        <ChevronRight />
+      </button>
+
+      {/* Dots */}
+      <div className="absolute z-30 bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`h-2 w-2 rounded-full transition-all ${
+              current === i ? "bg-white w-5" : "bg-white/50"
+            }`}
+          />
+        ))}
       </div>
     </div>
   );
